@@ -6,7 +6,7 @@ Based off the [Bosch BME280 C Driver](https://github.com/BoschSensortec/BME280_d
 
 ## What's Included
 
-### ccs8111_defs.h
+### [ccs811_defs.h](ccs811_defs.h)
 
 * Includes `#define`s for any major addresses, length, sensor operation modes, bit masks, etc.
 
@@ -48,7 +48,7 @@ Based off the [Bosch BME280 C Driver](https://github.com/BoschSensortec/BME280_d
 
     * CCS811 Function Pointer for Delaying
 
-### ccs811.h & ccs811.c
+### [ccs811.h](ccs811.h) & [ccs811.c](ccs811.c)
 
  * ccs811_init - Initialization
 
@@ -210,5 +210,38 @@ Based off the [Bosch BME280 C Driver](https://github.com/BoschSensortec/BME280_d
 
     * Converts given humidity and temperature into the environmental data structure. Creates the percentage and fraction values.
 
-## How to Use
+## How to Setup
 
+1. Create read, write, and delay functions
+
+1. Create CCS811 Struct with
+
+   * Appropriate I2C address
+
+   * Measurement Mode
+
+   * Read, write, and delay function pointers
+
+   * Setting hardware id, version, status reg, and error register to 0
+
+1. Run `ccs811_init`
+
+1. Run `ccs811_read_fw_boot_version`
+
+1. Run `ccs811_read_fw_app_version`
+
+1. Run `ccs811_read_ntc` if using external temperature sensor hooked up with resistors
+
+1. Run `ccs811_read_baseline_reg`
+
+1. Run `ccs811_status_reg` - Check error bit
+
+## How to read data
+
+1. Run `ccs811_status_reg` - Check data ready bit
+
+1. If data is ready, run `ccs811_read_alg_result_data`
+
+1. Set environmental data by running `ccs811_set_env_data`
+
+1. Go to step 1.
